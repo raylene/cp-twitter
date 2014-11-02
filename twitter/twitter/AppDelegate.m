@@ -13,6 +13,9 @@
 #import "User.h"
 #import "Tweet.h"
 
+// Macro for custom color combinations
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface AppDelegate ()
 
 @end
@@ -21,19 +24,27 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDidLogout) name:UserDidLogoutNotification object:nil];
     
+    UIViewController *mvc = nil;
     User *user = [User currentUser];
     if (user != nil) {
         NSLog(@"Welcome %@", user.name);
-        self.window.rootViewController = [[TweetsViewController alloc] init];
+        mvc = [[TweetsViewController alloc] init];
     } else {
         NSLog(@"Not logged in");
-        self.window.rootViewController = [[LoginViewController alloc] init];
+        mvc = [[LoginViewController alloc] init];
     }
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mvc];
+    self.window.rootViewController = navigationController;
+    
+    // Navigation bar style customization
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0x76C6F5)];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
     [self.window makeKeyAndVisible];
     return YES;
 }

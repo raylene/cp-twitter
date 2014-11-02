@@ -14,8 +14,6 @@ NSString * const UserDidLogoutNotification = @"UserDidLoginNotification";
 
 @interface User()
 
-@property (nonatomic, strong) NSDictionary *dictionary;
-
 @end
 @implementation User
 
