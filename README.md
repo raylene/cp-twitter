@@ -4,7 +4,7 @@ This is a basic twitter app to read and compose tweets the [Twitter API](https:/
 
 Time spent: `<Number of hours spent>`
 
-3 hours so far.
+7.5 hours so far.
 
 ### Features
 
