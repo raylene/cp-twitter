@@ -118,6 +118,7 @@ NSString * const UserPostSuccessNotification = @"UserPostSuccessNotification";
     NSString *postURL = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", statusID];
     [self POST:postURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completion(responseObject, nil);
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserPostSuccessNotification object:self userInfo:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error retweeting! %@", error);
         completion(nil, error);
