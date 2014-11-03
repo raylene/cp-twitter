@@ -28,4 +28,4 @@ Time spent: 13.5
 
 ### Walkthrough
 
-![Video Walkthrough](...)
+![Video Walkthrough](http://i.giphy.com/TlK63EvVojTdqoJvD6o.gif)
