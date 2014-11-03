@@ -15,6 +15,9 @@ NSString * const kTwitterConsumerKey = @"wJ24qGDGjMDp31oS9cJeKf8Sq";
 NSString * const kTwitterConsumerSecret = @"zSWdZDbLuoozLWolL9EVkNbKPoIHzZRL3zGYM8UMTL3EL6jTKV";
 NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 
+// Notifications
+NSString * const UserPostSuccessNotification = @"UserPostSuccessNotification";
+
 @interface TwitterClient()
 
 @property (nonatomic, strong) void (^loginCompletion)(User *user, NSError *error);
@@ -74,11 +77,49 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 }
 
 - (void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
-    [self GET:@"1.1/statuses/home_timeline.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"1.1/statuses/home_timeline.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *tweets = [Tweet tweetsWithArray:responseObject];
         completion(tweets, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error loading home_timeline");
+        completion(nil, error);
+    }];
+}
+
+- (void)postStatus:(NSString *)text replyToID:(NSString *)replyToID completion:(void (^)(NSDictionary *response, NSError *error))completion {
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:text forKey:@"status"];
+    if (replyToID) {
+        [params setValue:replyToID forKey:@"in_reply_to_status_id"];
+    }
+    NSLog(@"postStatus params: %@", params);
+
+    [self POST:@"1.1/statuses/update.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completion(responseObject, nil);
+        [[NSNotificationCenter defaultCenter] postNotificationName:UserPostSuccessNotification object:self userInfo:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error posting! %@", error);
+        completion(nil, error);
+    }];
+}
+
+- (void)favoriteStatus:(NSString *)statusID completion:(void (^)(NSDictionary *response, NSError *error))completion {
+    NSDictionary *params = @{@"id": statusID};
+    [self POST:@"1.1/favorites/create.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error favoriting! %@", error);
+        completion(nil, error);
+    }];
+}
+
+
+- (void)retweetStatus:(NSString *)statusID completion:(void (^)(NSDictionary *response, NSError *error))completion {
+    NSString *postURL = [NSString stringWithFormat:@"1.1/statuses/retweet/%@.json", statusID];
+    [self POST:postURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completion(responseObject, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error retweeting! %@", error);
         completion(nil, error);
     }];
 }

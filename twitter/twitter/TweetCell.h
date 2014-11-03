@@ -12,5 +12,6 @@
 @interface TweetCell : UITableViewCell
 
 @property (nonatomic, strong) Tweet *tweet;
+@property (weak, nonatomic) UIViewController *parentVC;
 
 @end

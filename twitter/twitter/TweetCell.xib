@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HqJ-Jl-DH1">
-                        <rect key="frame" x="12" y="31" width="70" height="70"/>
+                        <rect key="frame" x="12" y="29" width="70" height="70"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="6EQ-A4-bdS"/>
                             <constraint firstAttribute="height" constant="70" id="Hsy-ZF-XLu"/>
@@ -95,6 +95,7 @@
                     <constraint firstItem="Ubj-Oe-tic" firstAttribute="top" secondItem="wJi-Sf-52u" secondAttribute="bottom" constant="2" id="Dhe-er-hxv"/>
                     <constraint firstItem="yim-cc-wMZ" firstAttribute="centerY" secondItem="N4v-3D-k9B" secondAttribute="centerY" id="FdV-wk-uFA"/>
                     <constraint firstItem="1Dc-2R-Dvq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="459-J9-twH" secondAttribute="bottom" constant="8" id="HKJ-Ql-D90"/>
+                    <constraint firstItem="Ubj-Oe-tic" firstAttribute="top" secondItem="HqJ-Jl-DH1" secondAttribute="top" id="HPH-nl-UOe"/>
                     <constraint firstItem="VMc-cG-bd2" firstAttribute="leading" secondItem="Ubj-Oe-tic" secondAttribute="trailing" constant="4" id="JnA-Nb-dJw"/>
                     <constraint firstItem="1Dc-2R-Dvq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="88" id="KCT-04-j3v"/>
                     <constraint firstItem="yim-cc-wMZ" firstAttribute="centerY" secondItem="1Dc-2R-Dvq" secondAttribute="centerY" id="Mle-pT-qz0"/>
@@ -114,6 +115,7 @@
                     <constraint firstItem="yim-cc-wMZ" firstAttribute="leading" secondItem="1Dc-2R-Dvq" secondAttribute="trailing" constant="24" id="oiA-jR-7Jp"/>
                     <constraint firstItem="wJi-Sf-52u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="phs-BY-FEN"/>
                     <constraint firstItem="HqJ-Jl-DH1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="31" id="rJR-jX-AlA"/>
+                    <constraint firstItem="1Dc-2R-Dvq" firstAttribute="leading" secondItem="HqJ-Jl-DH1" secondAttribute="trailing" constant="6" id="rSe-VZ-crf"/>
                     <constraint firstItem="VMc-cG-bd2" firstAttribute="centerY" secondItem="vz9-pY-pwL" secondAttribute="centerY" id="rgi-KL-dhR"/>
                     <constraint firstItem="N4v-3D-k9B" firstAttribute="leading" secondItem="yim-cc-wMZ" secondAttribute="trailing" constant="24" id="tFs-wC-phM"/>
                     <constraint firstItem="VMc-cG-bd2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="uOs-Mn-LMM"/>
@@ -126,6 +128,7 @@
                     <mask key="constraints">
                         <exclude reference="ef7-in-ks7"/>
                         <exclude reference="o35-x7-gLF"/>
+                        <exclude reference="rJR-jX-AlA"/>
                         <exclude reference="wM7-AC-JZ6"/>
                         <exclude reference="Okp-Se-sus"/>
                         <exclude reference="Xqz-Dh-lPJ"/>

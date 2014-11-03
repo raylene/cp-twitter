@@ -6,6 +6,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComposerViewController">
             <connections>
+                <outlet property="composerInput" destination="o3D-vv-Mts" id="1lS-VB-ojz"/>
+                <outlet property="nameLabel" destination="dAA-Iq-R5q" id="ZfV-GI-0JP"/>
+                <outlet property="profileImageView" destination="9Tf-Uo-NMv" id="6Sa-qQ-gRE"/>
+                <outlet property="remainingCharsLabel" destination="snZ-gc-Drx" id="0ua-ys-4eW"/>
+                <outlet property="usernameLabel" destination="1l6-Xd-Goe" id="zJC-K0-KDD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,9 +18,73 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Tf-Uo-NMv">
+                    <rect key="frame" x="10" y="74" width="70" height="70"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="gbM-h6-uMB"/>
+                        <constraint firstAttribute="width" constant="70" id="wMV-FC-RLe"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="John Doe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAA-Iq-R5q">
+                    <rect key="frame" x="88" y="74" width="63" height="17"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@johndoe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l6-Xd-Goe">
+                    <rect key="frame" x="88" y="93" width="55" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Characters remaining: 140" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="snZ-gc-Drx">
+                    <rect key="frame" x="88" y="124" width="147" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCt-Yb-n3P">
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3D-vv-Mts">
+                    <rect key="frame" x="10" y="154" width="294" height="465"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="465" id="SEM-gq-ryY"/>
+                        <constraint firstAttribute="width" constant="294" id="y3T-FV-4sb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="1l6-Xd-Goe" firstAttribute="centerY" secondItem="dAA-Iq-R5q" secondAttribute="centerY" id="1OC-rP-GmV"/>
+                <constraint firstItem="snZ-gc-Drx" firstAttribute="top" secondItem="1l6-Xd-Goe" secondAttribute="bottom" constant="16" id="20u-FP-hb5"/>
+                <constraint firstItem="1l6-Xd-Goe" firstAttribute="leading" secondItem="9Tf-Uo-NMv" secondAttribute="trailing" constant="8" id="A37-YI-Bky"/>
+                <constraint firstItem="1l6-Xd-Goe" firstAttribute="top" secondItem="dAA-Iq-R5q" secondAttribute="bottom" constant="2" id="CEd-50-eZG"/>
+                <constraint firstItem="9Tf-Uo-NMv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="EC3-VA-bfZ"/>
+                <constraint firstItem="o3D-vv-Mts" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Hq9-27-AjX"/>
+                <constraint firstItem="9Tf-Uo-NMv" firstAttribute="top" secondItem="dAA-Iq-R5q" secondAttribute="top" id="JOj-r7-6R1"/>
+                <constraint firstItem="9Tf-Uo-NMv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="LcT-1g-AzX"/>
+                <constraint firstItem="o3D-vv-Mts" firstAttribute="top" secondItem="9Tf-Uo-NMv" secondAttribute="bottom" constant="10" id="WSz-q7-okg"/>
+                <constraint firstItem="dAA-Iq-R5q" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="14" id="YeT-Me-n6N"/>
+                <constraint firstItem="dAA-Iq-R5q" firstAttribute="leading" secondItem="9Tf-Uo-NMv" secondAttribute="trailing" constant="8" id="np2-6r-awu"/>
+                <constraint firstItem="snZ-gc-Drx" firstAttribute="leading" secondItem="9Tf-Uo-NMv" secondAttribute="trailing" constant="8" id="nyK-YM-gcH"/>
+                <constraint firstItem="1l6-Xd-Goe" firstAttribute="leading" secondItem="dAA-Iq-R5q" secondAttribute="trailing" constant="4" id="qBv-Lr-PIY"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="209" y="-748"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="YeT-Me-n6N"/>
+                    <exclude reference="1OC-rP-GmV"/>
+                    <exclude reference="qBv-Lr-PIY"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-452" y="-808"/>
         </view>
     </objects>
 </document>

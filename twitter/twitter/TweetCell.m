@@ -9,6 +9,7 @@
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "ComposerViewController.h"
+#import "TwitterClient.h"
 
 @interface TweetCell()
 
@@ -57,28 +58,48 @@
     self.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.originalPoster.screenname];
 
     if (tweet.isRetweet) {
-//        NSLog(@"isRetweet: OP: %@, RT: %@", tweet.originalPoster.name, tweet.user.name);
         if (!tweet.originalPoster.name) {
-//            NSLog(@"OP data: %@", tweet.originalPoster.dictionary);
         }
         self.retweetLabel.text = [NSString stringWithFormat:@"%@ retweeted", tweet.user.name];
     } else {
         self.retweetLabel.text = @"";
     }
 
-    //    self.timestampLabel.text = tweet.truncatedCreatedAt;
+    self.timestampLabel.text = tweet.truncatedTimestamp;
     self.contentLabel.text = tweet.text;
+    
+    [self.retweetButton setEnabled:!tweet.retweeted];
+    [self.favoriteButton setEnabled:!tweet.favorited];
 }
 
 - (IBAction)onReply:(id)sender {
-    NSLog(@"Hit REPLY button");
-//    ComposerViewController *vc = [[ComposerViewController alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
-}
-
-- (IBAction)onRetweet:(id)sender {
+    ComposerViewController *cvc = [[ComposerViewController alloc] init];
+    cvc.replyToTweet = self.tweet;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:cvc];
+    nvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self.parentVC presentViewController:nvc animated:YES completion:nil];
 }
 
 - (IBAction)onFavorite:(id)sender {
+    NSLog(@"Hit FAVORITE button");
+    [[TwitterClient sharedInstance] favoriteStatus:self.tweet.originalID completion:^(NSDictionary *response, NSError *error) {
+        if (response != nil) {
+            NSLog(@"Successfully favorited!");
+            [self.favoriteButton setEnabled:NO];
+            self.tweet.favorited = YES;
+        }
+    }];
 }
+
+- (IBAction)onRetweet:(id)sender {
+    NSLog(@"Hit RETWEET button");
+    [[TwitterClient sharedInstance] retweetStatus:self.tweet.originalID completion:^(NSDictionary *response, NSError *error) {
+        if (response != nil) {
+            NSLog(@"Successfully retweeted!");
+            [self.retweetButton setEnabled:NO];
+            self.tweet.retweeted = YES;
+        }
+    }];
+}
+
 @end
