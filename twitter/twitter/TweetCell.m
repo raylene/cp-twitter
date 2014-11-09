@@ -10,6 +10,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "ComposerViewController.h"
 #import "TwitterClient.h"
+#import "ProfileViewController.h"
 
 @interface TweetCell()
 
@@ -39,6 +40,19 @@
     
     self.thumbImageView.layer.cornerRadius = 3;
     self.thumbImageView.clipsToBounds = YES;
+
+    // This may be useless
+    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileTap:)];
+    [self.thumbImageView addGestureRecognizer:tapGR];
+}
+
+// TODO: see if this also registers in addition to the full cell selection event
+- (void)onProfileTap:(UIPanGestureRecognizer *)sender {
+    NSLog(@"On profile tap!");
+    ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    pvc.user = self.tweet.originalPoster;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+    [self.parentVC presentViewController:nvc animated:YES completion:nil];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

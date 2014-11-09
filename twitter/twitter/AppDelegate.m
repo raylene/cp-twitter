@@ -14,6 +14,10 @@
 #import "User.h"
 #import "Tweet.h"
 
+// TESTING
+#import "ProfileViewController.h"
+#import "MenuViewController.h"
+
 // Macro for custom color combinations
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -37,6 +41,10 @@
         NSLog(@"Not logged in");
         mvc = [[LoginViewController alloc] init];
     }
+    
+    // TESTING
+    mvc = [[ProfileViewController alloc] init];
+    mvc = [[MenuViewController alloc] init];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mvc];

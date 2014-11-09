@@ -10,6 +10,7 @@
 #import "ComposerViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "TwitterClient.h"
+#import "ProfileViewController.h"
 
 @interface TweetDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
@@ -42,19 +43,12 @@
     self.thumbImageView.clipsToBounds = YES;
     [self setupNavigationBar];
     [self displayTweet];
+    [self setupGestures];
 }
 
 - (void)setupNavigationBar {
     self.title = @"Tweet";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onReply:)];
-}
-
-- (IBAction)onReply:(id)sender {
-    ComposerViewController *cvc = [[ComposerViewController alloc] init];
-    cvc.replyToTweet = self.tweet;
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:cvc];
-    nvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (void)displayTweet {
@@ -80,6 +74,29 @@
     
     [self.retweetButton setEnabled:(!self.tweet.retweeted)];
     [self.favoriteButton setEnabled:(!self.tweet.favorited)];
+}
+
+- (void)setupGestures {
+    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileTap:)];
+    [self.thumbImageView addGestureRecognizer:tapGR];
+    // NOTE -- kind of clowny that these use tap gestures since they could just be rendered as links?
+    [self.nameLabel addGestureRecognizer:tapGR];
+    [self.usernameLabel addGestureRecognizer:tapGR];
+}
+
+- (void)onProfileTap:(UIPanGestureRecognizer *)sender {
+    ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    pvc.user = self.tweet.originalPoster;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (IBAction)onReply:(id)sender {
+    ComposerViewController *cvc = [[ComposerViewController alloc] init];
+    cvc.replyToTweet = self.tweet;
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:cvc];
+    nvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 - (IBAction)onFavorite:(id)sender {
