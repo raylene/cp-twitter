@@ -81,7 +81,27 @@ NSString * const UserPostSuccessNotification = @"UserPostSuccessNotification";
         NSArray *tweets = [Tweet tweetsWithArray:responseObject];
         completion(tweets, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error loading home_timeline");
+        NSLog(@"error loading home_timeline: %@", error);
+        completion(nil, error);
+    }];
+}
+
+- (void)mentionsTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    [self GET:@"1.1/statuses/mentions_timeline.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
+        completion(tweets, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error loading mentions_timeline: %@", error);
+        completion(nil, error);
+    }];
+}
+
+- (void)userTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion {
+    [self GET:@"1.1/statuses/user_timeline.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
+        completion(tweets, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error loading user timeline: %@", error);
         completion(nil, error);
     }];
 }
@@ -102,6 +122,8 @@ NSString * const UserPostSuccessNotification = @"UserPostSuccessNotification";
         completion(nil, error);
     }];
 }
+
+#pragma mark - Tweet modifications (TODO: move into the Tweet model?)
 
 - (void)favoriteStatus:(NSString *)statusID completion:(void (^)(NSDictionary *response, NSError *error))completion {
     NSDictionary *params = @{@"id": statusID};
@@ -124,5 +146,14 @@ NSString * const UserPostSuccessNotification = @"UserPostSuccessNotification";
         completion(nil, error);
     }];
 }
+
+//#pragma mark - User-related fetching (TODO: move into the User model?)
+//- (void)getUser
+//profile_banner_url
+//profile_background_image_url
+//profile_background_color
+//statuses_count
+//followers_count
+//friends_count
 
 @end

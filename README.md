@@ -2,7 +2,11 @@
 
 This is week 2 of working on a basic twitter app, which now includes a basic hamburger menu and profile page.
 
-Time spent: In-progress
+I spent way too long on getting the hamburger menu to work properly, so ran out of time before getting to the optional features this time :(
+
+In particular, I had a lot of trouble figuring out how (if possible?) to customize the navigation for each new view I presented -- it seemed like all the views presented via the menu logic kept the same nav bar. Need to do more digging.
+
+Time spent: 12
 
 ### Features
 
@@ -10,17 +14,17 @@ Time spent: In-progress
 
 Hamburger menu
 
-- [ ] Dragging anywhere in the view should reveal the menu.
-- [ ] The menu should include links to your profile, the home timeline, and the mentions view. The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
+- [X] Dragging anywhere in the view should reveal the menu.
+- [X] The menu should include links to your profile, the home timeline, and the mentions view. The menu can look similar to the LinkedIn menu below or feel free to take liberty with the UI.
 
 Profile page
 
-- [ ] Contains the user header view
-- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
+- [X] Contains the user header view
+- [X] Contains a section with the users basic stats: # tweets, # following, # followers
 
 Home Timeline
 
-- [ ] Tapping on a user image should bring up that user's profile page
+- [X] Tapping on a user image should bring up that user's profile page
 
 #### Optional
 
@@ -38,4 +42,4 @@ Account switching
 
 ### Walkthrough
 
-![Video Walkthrough](...)
+![Video Walkthrough](http://i.giphy.com/3rgXBvsIOWSfCdyXGE.gif)

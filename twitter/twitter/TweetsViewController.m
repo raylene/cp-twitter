@@ -13,6 +13,8 @@
 #import "TweetCell.h"
 #import "TweetDetailViewController.h"
 #import "ComposerViewController.h"
+#import "MenuViewController.h"
+#import "SVProgressHUD.h"
 
 @interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -25,21 +27,24 @@
 
 @implementation TweetsViewController
 
+- (TweetsViewController *)init {
+    self = [super init];
+    self.useHomeTimeline = YES; // default
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"TweetsViewController - viewDidLoad");
+    
+    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeGradient];
+    [self.tweetTableView setHidden:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userPostSuccess:) name:UserPostSuccessNotification object:nil];
     
-    [self setupNavigationBar];
     [self setupTableView];
     [self setupRefreshControl];
     [self loadTweets];
-}
-
-- (void)setupNavigationBar {
-    self.title = @"Home";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(onCompose:)];
 }
 
 - (void)setupTableView {
@@ -58,21 +63,33 @@
 }
 
 - (void)loadTweets {
-    [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
-        self.tweets = tweets;
-        NSLog(@"Loaded %d tweets!", tweets.count);
-        [self.tweetTableView reloadData];
-        [self.refreshControl endRefreshing];
-    }];
+    NSLog(@"loadTweets: %hhd", self.useHomeTimeline);
+    if (self.useHomeTimeline) {
+        [[TwitterClient sharedInstance] homeTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+            self.tweets = tweets;
+            NSLog(@"Loaded %d tweets!", tweets.count);
+            [self.tweetTableView reloadData];
+            [self.tweetTableView setHidden:NO];
+            [self.refreshControl endRefreshing];
+            [SVProgressHUD dismiss];
+        }];
+    } else {
+        [[TwitterClient sharedInstance] mentionsTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+            self.tweets = tweets;
+            NSLog(@"Loaded %d tweets!", tweets.count);
+            [self.tweetTableView reloadData];
+            [self.tweetTableView setHidden:NO];
+            [self.refreshControl endRefreshing];
+            [SVProgressHUD dismiss];
+        }];
+    }
 }
 
-- (IBAction)onLogout:(id)sender {
-    [User logout];
+- (IBAction)onMenu:(id)sender {
+    [self presentViewController:[[MenuViewController alloc]init] animated:YES completion:nil];
 }
 
 - (IBAction)onCompose:(id)sender {
-    NSLog(@"composing new tweet");
-    
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:[[ComposerViewController alloc] init]];
     nvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:nvc animated:YES completion:nil];

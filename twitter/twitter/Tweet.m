@@ -27,19 +27,15 @@ NSTimeInterval const kSecondsInDay = 86400;
 
         self.originalID = dictionary[@"id_str"];
         self.isRetweet = (dictionary[@"retweeted_status"] != nil);
-        NSLog(@"Is RT? %hhd", self.isRetweet);
         if (self.isRetweet) {
             tweetDictionary = dictionary[@"retweeted_status"];
             self.originalID = tweetDictionary[@"id_str"];
-            NSLog(@"Retweeted status: %@", tweetDictionary[@"text"]);
         }
         
         [self setFieldsFromTweetDictionary:tweetDictionary];
         
         self.favorited = [[dictionary objectForKey:@"favorited"] boolValue];
         self.retweeted = [[dictionary objectForKey:@"retweeted"] boolValue];
-        NSLog(@"Favorited: %@, Retweeted: %@; %hhd, %hhd", [dictionary objectForKey:@"favorited"], [dictionary objectForKey:@"retweeted"],
-              self.favorited, self.retweeted);
     }
     return self;
 }

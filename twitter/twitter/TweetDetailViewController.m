@@ -36,7 +36,6 @@
 @implementation TweetDetailViewController
 
 - (void)viewDidLoad {
-    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     self.contentLabel.preferredMaxLayoutWidth = self.contentLabel.frame.size.width;
     self.thumbImageView.layer.cornerRadius = 3;
@@ -47,8 +46,8 @@
 }
 
 - (void)setupNavigationBar {
-    self.title = @"Tweet";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onReply:)];
+    [[[self parentViewController] navigationItem] setTitle:@"Tweet"];
+    [[[self parentViewController] navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onReply:)]];
 }
 
 - (void)displayTweet {
@@ -79,22 +78,21 @@
 - (void)setupGestures {
     UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileTap:)];
     [self.thumbImageView addGestureRecognizer:tapGR];
-    // NOTE -- kind of clowny that these use tap gestures since they could just be rendered as links?
-    [self.nameLabel addGestureRecognizer:tapGR];
-    [self.usernameLabel addGestureRecognizer:tapGR];
+    [self.thumbImageView setUserInteractionEnabled:YES];
 }
 
 - (void)onProfileTap:(UIPanGestureRecognizer *)sender {
     ProfileViewController *pvc = [[ProfileViewController alloc] init];
     pvc.user = self.tweet.originalPoster;
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-    [self presentViewController:nvc animated:YES completion:nil];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
+// TODO: investigate "Presenting view controllers on detached view controllers is discouraged" warning...
 - (IBAction)onReply:(id)sender {
     ComposerViewController *cvc = [[ComposerViewController alloc] init];
     cvc.replyToTweet = self.tweet;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:cvc];
+
     nvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:nvc animated:YES completion:nil];
 }

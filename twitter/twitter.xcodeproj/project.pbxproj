@@ -20,6 +20,8 @@
 		AF5A10EE1A0F25BD00B46195 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF5A10EC1A0F25BD00B46195 /* MenuViewController.xib */; };
 		AF5A10F21A0F2EB300B46195 /* MenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AF5A10F01A0F2EB300B46195 /* MenuItemCell.m */; };
 		AF5A10F31A0F2EB300B46195 /* MenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF5A10F11A0F2EB300B46195 /* MenuItemCell.xib */; };
+		AF9160141A10DC93004DEAD6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF9160121A10DC93004DEAD6 /* MainViewController.m */; };
+		AF9160151A10DC93004DEAD6 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AF9160131A10DC93004DEAD6 /* MainViewController.xib */; };
 		AFE6EDC71A03F949007F8DA1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AFE6EDC61A03F949007F8DA1 /* main.m */; };
 		AFE6EDCA1A03F949007F8DA1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AFE6EDC91A03F949007F8DA1 /* AppDelegate.m */; };
 		AFE6EDD21A03F949007F8DA1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFE6EDD11A03F949007F8DA1 /* Images.xcassets */; };
@@ -64,6 +66,9 @@
 		AF5A10EF1A0F2EB300B46195 /* MenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemCell.h; sourceTree = "<group>"; };
 		AF5A10F01A0F2EB300B46195 /* MenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemCell.m; sourceTree = "<group>"; };
 		AF5A10F11A0F2EB300B46195 /* MenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemCell.xib; sourceTree = "<group>"; };
+		AF9160111A10DC93004DEAD6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		AF9160121A10DC93004DEAD6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		AF9160131A10DC93004DEAD6 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		AFE6EDC11A03F949007F8DA1 /* twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE6EDC51A03F949007F8DA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFE6EDC61A03F949007F8DA1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -216,6 +221,9 @@
 				AF5A10EA1A0F25BD00B46195 /* MenuViewController.h */,
 				AF5A10EB1A0F25BD00B46195 /* MenuViewController.m */,
 				AF5A10EC1A0F25BD00B46195 /* MenuViewController.xib */,
+				AF9160111A10DC93004DEAD6 /* MainViewController.h */,
+				AF9160121A10DC93004DEAD6 /* MainViewController.m */,
+				AF9160131A10DC93004DEAD6 /* MainViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -334,6 +342,7 @@
 				6F7A30371A05A2FB00225F49 /* ComposerViewController.xib in Resources */,
 				AF5A10E91A0F19C900B46195 /* ProfileViewController.xib in Resources */,
 				6F7A30321A05A10600225F49 /* TweetDetailViewController.xib in Resources */,
+				AF9160151A10DC93004DEAD6 /* MainViewController.xib in Resources */,
 				AF5A10EE1A0F25BD00B46195 /* MenuViewController.xib in Resources */,
 				6F7A302D1A04943800225F49 /* TweetCell.xib in Resources */,
 				AFE6EDD51A03F949007F8DA1 /* LaunchScreen.xib in Resources */,
@@ -400,6 +409,7 @@
 				AF5A10ED1A0F25BD00B46195 /* MenuViewController.m in Sources */,
 				AFE6EDFC1A044641007F8DA1 /* TweetsViewController.m in Sources */,
 				AF5A10E81A0F19C900B46195 /* ProfileViewController.m in Sources */,
+				AF9160141A10DC93004DEAD6 /* MainViewController.m in Sources */,
 				6F7A30361A05A2FB00225F49 /* ComposerViewController.m in Sources */,
 				6F7A302C1A04943800225F49 /* TweetCell.m in Sources */,
 			);

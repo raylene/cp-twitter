@@ -9,8 +9,7 @@
 #import "User.h"
 #import "TwitterClient.h"
 
-NSString * const UserDidLoginNotification = @"UserDidLoginNotification";
-NSString * const UserDidLogoutNotification = @"UserDidLoginNotification";
+NSString * const UserDidLogoutNotification = @"UserDidLogoutNotification";
 
 @interface User()
 
@@ -20,11 +19,18 @@ NSString * const UserDidLogoutNotification = @"UserDidLoginNotification";
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if (self) {
+        self.dictionary = dictionary;
+
+        self.userID = dictionary[@"id_str"];
         self.name = dictionary[@"name"];
         self.screenname = dictionary[@"screen_name"];
         self.profileImageUrl = dictionary[@"profile_image_url"];
         self.tagline = dictionary[@"description"];
-        self.dictionary = dictionary;
+
+        self.preferredBackgroundImageUrl = dictionary[@"profile_background_image_url"];
+        self.statusesCount = dictionary[@"statuses_count"];
+        self.followersCount = dictionary[@"followers_count"];
+        self.friendsCount = dictionary[@"friends_count"];
     }
     return self;
 }
@@ -61,4 +67,5 @@ NSString * const kCurrentUserKey = @"kCurrentUserKey";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:UserDidLogoutNotification object:nil];
 }
+
 @end

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainViewController.h"
 
 @interface MenuViewController : UIViewController
+
+@property (nonatomic, strong) MainViewController *mainVC;
 
 @end

@@ -10,6 +10,9 @@
 #import "User.h"
 #import "TweetCell.h"
 #import "UIImageView+AFNetworking.h"
+#import "TwitterClient.h"
+#import "SVProgressHUD.h"
+#import "TweetDetailViewController.h"
 
 @interface ProfileViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -26,9 +29,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *followerCountLabel;
 
 @property (weak, nonatomic) IBOutlet UITableView *tweetTableView;
-@property (nonatomic, strong) NSArray *tweets;
-
 @property (weak, nonatomic) TweetCell *prototypeTweetCell;
+@property (nonatomic, strong) NSArray *tweets;
 
 @end
 
@@ -37,80 +39,90 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // To replace with the user this profile is for
-    self.user = [User currentUser];
+    [SVProgressHUD showWithStatus:@"Loading..." maskType:SVProgressHUDMaskTypeGradient];
     [self setupHeader];
     [self setupStats];
     [self setupTweets];
 
-    // Can I setup the giant scroll view programmatically?
-    [self setupContainerScrollView];
+    // TODO: how do you create a ScrollView that includes both the header and the table?
+    [[self navigationItem] setTitle:@"Profile"];
 }
 
 # pragma mark Private helper methods
 
-- (void)setupContainerScrollView {
-//    self.containerScrollView = [[UIScrollView alloc] init];
-//    self.containerScrollView.bounds = self.view.bounds;
-//    
-//    [self.view addSubview:self.containerScrollView];
-//    [self.containerScrollView addSubview:self.headerView];
-//    [self.containerScrollView addSubview:self.tweetTableView];
-}
-
 - (void)setupHeader {
     [self.profileImageView setImageWithURL:[NSURL URLWithString:self.user.profileImageUrl]];
+    [self.headerImageView setImageWithURL:[NSURL URLWithString:self.user.preferredBackgroundImageUrl]];
     self.nameLabel.text = self.user.name;
     self.usernameLabel.text = [NSString stringWithFormat:@"@%@", self.user.screenname];
 }
 
 - (void)setupStats {
-//    self.tweetCountLabel.text = ;
-//    self.followingCountLabel.text = ;
-//    self.followerCountLabel.text = ;
-    
+    self.tweetCountLabel.text = [self getStatString:self.user.statusesCount];
+    self.followingCountLabel.text = [self getStatString:self.user.friendsCount];
+    self.followerCountLabel.text = [self getStatString:self.user.followersCount];
+}
+
+- (NSString *)getStatString:(NSNumber *)count {
+    if ([count integerValue] > 5000) {
+        return [NSString stringWithFormat:@"%dk", (int)([count integerValue]/1000)];
+    }
+    return [count stringValue];
 }
 
 - (void)setupTweets {
     self.tweetTableView.delegate = self;
     self.tweetTableView.dataSource = self;
     self.tweetTableView.rowHeight = UITableViewAutomaticDimension;
-        
+    [self.tweetTableView setHidden:YES];
+    
     UINib *tweetCellNib = [UINib nibWithNibName:@"TweetCell" bundle:nil];
     [self.tweetTableView registerNib:tweetCellNib forCellReuseIdentifier:@"TweetCell"];
-    
-    // TODO: replace with real data!
-    self.tweets = [[NSArray alloc] init];
+
+    NSDictionary *params = @{@"user_id": self.user.userID};
+    [[TwitterClient sharedInstance] userTimelineWithParams:params completion:^(NSArray *tweets, NSError *error) {
+        self.tweets = tweets;
+        [self.tweetTableView reloadData];
+        [self.tweetTableView setHidden:NO];
+        [SVProgressHUD dismiss];
+    }];
+}
+
+
+#pragma mark - Custom setters
+
+- (TweetCell *)prototypeTweetCell {
+    if (_prototypeTweetCell == nil) {
+        _prototypeTweetCell = [self.tweetTableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    }
+    return _prototypeTweetCell;
 }
 
 #pragma mark - UITableView methods
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
-//   self.prototypeTweetCell.tweet = self.tweets[indexPath.row];
-//    CGSize size = [self.prototypeTweetCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    return size.height + 1;
+   self.prototypeTweetCell.tweet = self.tweets[indexPath.row];
+    CGSize size = [self.prototypeTweetCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return size.height + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
-//    cell.tweet = self.tweets[indexPath.row];
+    cell.tweet = self.tweets[indexPath.row];
     cell.parentVC = self;
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
     return self.tweets.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
-//    vc.tweet = self.tweets[indexPath.row];
-//    [self.navigationController pushViewController:vc animated:YES];
+    TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
+    vc.tweet = self.tweets[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

@@ -10,4 +10,8 @@
 
 @interface TweetsViewController : UIViewController
 
+// If not home timeline, then use mentions timeline
+// TODO: better way to do this with configs/params?
+@property (nonatomic, assign) BOOL useHomeTimeline;
+
 @end

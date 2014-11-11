@@ -17,21 +17,14 @@
 
 @implementation MenuItemCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void)setConfig:(NSDictionary *)config {
     _config = config;
     self.itemName.text = config[@"name"];
-    
-    // TODO: set icon image
+    self.itemImage.image = [UIImage imageNamed:config[@"img"]];
 }
 
 @end

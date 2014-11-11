@@ -12,10 +12,12 @@
 #import "MenuItemCell.h"
 #import "ProfileViewController.h"
 #import "TweetsViewController.h"
+#import "MainViewController.h"
 
 int const kProfileItemIndex = 0;
 int const kHomeItemIndex = 1;
 int const kMentionsItemIndex = 2;
+int const kLogoutItemIndex = 3;
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -38,16 +40,6 @@ int const kMentionsItemIndex = 2;
     [self setupMenuTable];
 }
 
-- (IBAction)onProfileButtonClick:(id)sender {
-}
-
-- (IBAction)onHomeButtonClick:(id)sender {
-    
-}
-- (IBAction)onMentionsButtonClick:(id)sender {
-
-}
-
 #pragma mark - Custom setters
 
 - (MenuItemCell *)prototypeCell {
@@ -59,7 +51,8 @@ int const kMentionsItemIndex = 2;
 
 # pragma mark Private helper methods
 
-// TODO: figure out how best to share functionality like this
+// TODO: figure out how best to share functionality like this, as it's used across
+// several different views
 - (void)displayUserInfo {
     User *user = [User currentUser];
     [self.profileImageView setImageWithURL:[NSURL URLWithString:user.profileImageUrl]];
@@ -71,6 +64,8 @@ int const kMentionsItemIndex = 2;
     self.menuTableView.delegate = self;
     self.menuTableView.dataSource = self;
     self.menuTableView.rowHeight = UITableViewAutomaticDimension;
+    // No footer
+    self.menuTableView.tableFooterView = [[UIView alloc] init];
     
     UINib *menuItemCellNib = [UINib nibWithNibName:@"MenuItemCell" bundle:nil];
     [self.menuTableView registerNib:menuItemCellNib forCellReuseIdentifier:@"MenuItemCell"];
@@ -78,9 +73,10 @@ int const kMentionsItemIndex = 2;
     // Init menu item option configurations
     self.menuItemConfig =
         @[
-          @{@"name" : @"Profile", @"img": @500},
-          @{@"name" : @"Home", @"img": @1000},
-          @{@"name" : @"Mentions", @"img": @2000}
+          @{@"name" : @"Profile", @"img":@"profile"},
+          @{@"name" : @"Home", @"img": @"home"},
+          @{@"name" : @"Mentions", @"img": @"mentions"},
+          @{@"name" : @"Logout", @"img": @"logout"}
           ];
 }
 
@@ -108,12 +104,16 @@ int const kMentionsItemIndex = 2;
     UIViewController *vc;
     if (indexPath.row == kProfileItemIndex) {
         vc = [[ProfileViewController alloc] init];
+        [(ProfileViewController *)vc setUser:[User currentUser]];
     } else if (indexPath.row == kHomeItemIndex) {
         vc = [[TweetsViewController alloc] init];
     } else if (indexPath.row == kMentionsItemIndex) {
         vc = [[TweetsViewController alloc] init];
+        [(TweetsViewController *)vc setUseHomeTimeline:NO];
+    } else if (indexPath.row == kLogoutItemIndex) {
+        [User logout];
     }
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.mainVC displayContentVC:[[UINavigationController alloc] initWithRootViewController:vc]];
 }
 
 @end

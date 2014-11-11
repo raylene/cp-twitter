@@ -41,18 +41,17 @@
     self.thumbImageView.layer.cornerRadius = 3;
     self.thumbImageView.clipsToBounds = YES;
 
-    // This may be useless
     UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileTap:)];
     [self.thumbImageView addGestureRecognizer:tapGR];
+    [self.thumbImageView setUserInteractionEnabled:YES];
 }
 
-// TODO: see if this also registers in addition to the full cell selection event
+// TODO: Don't navigate if you're on this person's profile? Maybe use events?
 - (void)onProfileTap:(UIPanGestureRecognizer *)sender {
     NSLog(@"On profile tap!");
     ProfileViewController *pvc = [[ProfileViewController alloc] init];
     pvc.user = self.tweet.originalPoster;
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:pvc];
-    [self.parentVC presentViewController:nvc animated:YES completion:nil];
+    [self.parentVC.navigationController pushViewController:pvc animated:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -21,6 +21,8 @@ extern NSString * const UserPostSuccessNotification;
 
 // GET
 - (void)homeTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion;
+- (void)mentionsTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion;
+- (void)userTimelineWithParams:(NSDictionary *)params completion:(void (^)(NSArray *tweets, NSError *error))completion;
 
 // POST
 - (void)postStatus:(NSString *)text replyToID:(NSString *)replyToID completion:(void (^)(NSDictionary *response, NSError *error))completion;
